@@ -228,10 +228,10 @@ instacart-lakehouse-pipeline/
 
 
 ### Gold Tables in Catalog Explorer
-![Gold tables](screenshots/04_gold_tables_catalog.png)
+![Gold tables](screenshots/gold_table_example.png)
 
 ### Dashboard Overview
-![Dashboard overview](screenshots/06_dashboard_overview_top.png)
+![Dashboard overview](screenshots/04_dashboard_overview.png)
 
 ### Product & Department Performance
 ![Product and department dashboard](screenshots/08_dashboard_product_department_top.png)

@@ -1,0 +1,2498 @@
+{
+  "datasets": [
+    {
+      "name": "1b7fa189",
+      "displayName": "gold_daily_orders",
+      "config": {
+        "version": "1.1",
+        "source": "resume_project.gold.gold_daily_orders",
+        "dimensions": [
+          {
+            "expr": "source.*"
+          },
+          {
+            "name": "day_name",
+            "expr": "CASE `order_dow` WHEN 0 THEN 'Monday' WHEN 1 THEN 'Tuesday' WHEN 2 THEN 'Wednesday' WHEN 3 THEN 'Thursday' WHEN 4 THEN 'Friday' WHEN 5 THEN 'Saturday' WHEN 6 THEN 'Sunday' END"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "66460b62",
+      "displayName": "gold_departments",
+      "config": {
+        "version": "1.1",
+        "source": "resume_project.gold.gold_departments",
+        "dimensions": [
+          {
+            "expr": "source.*"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "89fbf02b",
+      "displayName": "gold_hourly_orders",
+      "config": {
+        "version": "1.1",
+        "source": "resume_project.gold.gold_hourly_orders",
+        "dimensions": [
+          {
+            "expr": "source.*"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "04a47531",
+      "displayName": "gold_product_pairs",
+      "config": {
+        "version": "1.1",
+        "source": "resume_project.gold.gold_product_pairs",
+        "dimensions": [
+          {
+            "expr": "source.*"
+          },
+          {
+            "name": "product_pair",
+            "expr": "CONCAT(`product_1`, ' + ', `product_2`)"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "878b0f62",
+      "displayName": "gold_reorders",
+      "config": {
+        "version": "1.1",
+        "source": "resume_project.gold.gold_reorders",
+        "dimensions": [
+          {
+            "expr": "source.*"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "e8121ac1",
+      "displayName": "gold_user_behavior",
+      "config": {
+        "version": "1.1",
+        "source": "resume_project.gold.gold_user_behavior",
+        "dimensions": [
+          {
+            "expr": "source.*"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "top_reordered_product",
+      "displayName": "Most Reordered Product",
+      "queryLines": [
+        "SELECT\n",
+        "  product_name,\n",
+        "  Times_Reordered\n",
+        "FROM\n",
+        "  resume_project.gold.gold_reorders\n",
+        "ORDER BY\n",
+        "  Times_Reordered DESC\n",
+        "LIMIT 1"
+      ]
+    },
+    {
+      "name": "top_department",
+      "displayName": "Top Department by Orders",
+      "queryLines": [
+        "SELECT\n",
+        "  department_name,\n",
+        "  total_orders\n",
+        "FROM\n",
+        "  resume_project.gold.gold_departments\n",
+        "ORDER BY\n",
+        "  total_orders DESC\n",
+        "LIMIT 1"
+      ]
+    },
+    {
+      "name": "highest_loyalty_dept",
+      "displayName": "Highest Loyalty Department",
+      "queryLines": [
+        "SELECT\n",
+        "  department_name,\n",
+        "  reorder_rate_percent\n",
+        "FROM\n",
+        "  resume_project.gold.gold_departments\n",
+        "ORDER BY\n",
+        "  reorder_rate_percent DESC\n",
+        "LIMIT 1"
+      ]
+    },
+    {
+      "name": "top10_products_reordered",
+      "displayName": "Top 10 Products by Reorders",
+      "queryLines": [
+        "SELECT\n",
+        "  product_name,\n",
+        "  Times_Reordered\n",
+        "FROM\n",
+        "  resume_project.gold.gold_reorders\n",
+        "ORDER BY\n",
+        "  Times_Reordered DESC\n",
+        "LIMIT 10"
+      ]
+    },
+    {
+      "name": "highest_loyalty_product",
+      "displayName": "Highest Loyalty Product",
+      "queryLines": [
+        "SELECT\n",
+        "  product_name,\n",
+        "  reorder_rate_percent\n",
+        "FROM\n",
+        "  resume_project.gold.gold_reorders\n",
+        "WHERE\n",
+        "  total_orders >= 100\n",
+        "ORDER BY\n",
+        "  reorder_rate_percent DESC\n",
+        "LIMIT 1"
+      ]
+    },
+    {
+      "name": "top10_rate",
+      "displayName": "Top 10 Products by Reorder Rate",
+      "queryLines": [
+        "SELECT\n",
+        "  product_name,\n",
+        "  reorder_rate_percent\n",
+        "FROM\n",
+        "  resume_project.gold.gold_reorders\n",
+        "WHERE\n",
+        "  total_orders >= 100\n",
+        "ORDER BY\n",
+        "  reorder_rate_percent DESC\n",
+        "LIMIT 10"
+      ]
+    },
+    {
+      "name": "scatter_purchases_reorder",
+      "displayName": "Purchases vs Reorder Rate",
+      "queryLines": [
+        "SELECT\n",
+        "  product_name,\n",
+        "  total_orders AS total_purchases,\n",
+        "  reorder_rate_percent\n",
+        "FROM\n",
+        "  resume_project.gold.gold_reorders\n",
+        "WHERE\n",
+        "  total_orders >= 100"
+      ]
+    },
+    {
+      "name": "top10_products_purchases",
+      "displayName": "Top 10 Products by Purchases",
+      "queryLines": [
+        "SELECT\n",
+        "  product_name,\n",
+        "  total_orders AS total_purchases\n",
+        "FROM\n",
+        "  resume_project.gold.gold_reorders\n",
+        "ORDER BY\n",
+        "  total_orders DESC\n",
+        "LIMIT 10"
+      ]
+    },
+    {
+      "name": "top15_product_pairs",
+      "displayName": "Top 15 Product Pairs",
+      "queryLines": [
+        "SELECT\n",
+        "  CONCAT(product_1, ' + ', product_2) AS product_pair,\n",
+        "  times_bought_together\n",
+        "FROM\n",
+        "  resume_project.gold.gold_product_pairs\n",
+        "ORDER BY\n",
+        "  times_bought_together DESC\n",
+        "LIMIT 15"
+      ]
+    },
+    {
+      "name": "user_loyalty_segments",
+      "displayName": "User Loyalty Segments",
+      "queryLines": [
+        "SELECT\n",
+        "  CASE\n",
+        "    WHEN\n",
+        "      reorder_rate_percent >= 0\n",
+        "      AND reorder_rate_percent < 25\n",
+        "    THEN\n",
+        "      '0-25%'\n",
+        "    WHEN\n",
+        "      reorder_rate_percent >= 25\n",
+        "      AND reorder_rate_percent < 50\n",
+        "    THEN\n",
+        "      '25-50%'\n",
+        "    WHEN\n",
+        "      reorder_rate_percent >= 50\n",
+        "      AND reorder_rate_percent < 75\n",
+        "    THEN\n",
+        "      '50-75%'\n",
+        "    ELSE '75-100%'\n",
+        "  END AS reorder_rate_bucket,\n",
+        "  COUNT(*) AS user_count,\n",
+        "  AVG(avg_days_between_orders) AS avg_days_between_orders\n",
+        "FROM\n",
+        "  resume_project.gold.gold_user_behavior\n",
+        "GROUP BY\n",
+        "  CASE\n",
+        "    WHEN\n",
+        "      reorder_rate_percent >= 0\n",
+        "      AND reorder_rate_percent < 25\n",
+        "    THEN\n",
+        "      '0-25%'\n",
+        "    WHEN\n",
+        "      reorder_rate_percent >= 25\n",
+        "      AND reorder_rate_percent < 50\n",
+        "    THEN\n",
+        "      '25-50%'\n",
+        "    WHEN\n",
+        "      reorder_rate_percent >= 50\n",
+        "      AND reorder_rate_percent < 75\n",
+        "    THEN\n",
+        "      '50-75%'\n",
+        "    ELSE '75-100%'\n",
+        "  END\n",
+        "ORDER BY\n",
+        "  user_count DESC"
+      ]
+    },
+    {
+      "name": "avg_user_reorder_rate",
+      "displayName": "Average User Reorder Rate",
+      "queryLines": [
+        "SELECT\n",
+        "  AVG(reorder_rate_percent) AS avg_reorder_rate\n",
+        "FROM\n",
+        "  resume_project.gold.gold_user_behavior"
+      ]
+    },
+    {
+      "name": "avg_days_between_orders",
+      "displayName": "Average Days Between Orders",
+      "queryLines": [
+        "SELECT\n",
+        "  AVG(avg_days_between_orders) AS avg_days\n",
+        "FROM\n",
+        "  resume_project.gold.gold_user_behavior"
+      ]
+    },
+    {
+      "name": "days_distribution",
+      "displayName": "Days Between Orders Distribution",
+      "queryLines": [
+        "SELECT\n",
+        "  CASE\n",
+        "    WHEN\n",
+        "      avg_days_between_orders >= 0\n",
+        "      AND avg_days_between_orders <= 7\n",
+        "    THEN\n",
+        "      '0-7 days'\n",
+        "    WHEN\n",
+        "      avg_days_between_orders > 7\n",
+        "      AND avg_days_between_orders <= 14\n",
+        "    THEN\n",
+        "      '8-14 days'\n",
+        "    WHEN\n",
+        "      avg_days_between_orders > 14\n",
+        "      AND avg_days_between_orders <= 21\n",
+        "    THEN\n",
+        "      '15-21 days'\n",
+        "    WHEN\n",
+        "      avg_days_between_orders > 21\n",
+        "      AND avg_days_between_orders <= 30\n",
+        "    THEN\n",
+        "      '22-30 days'\n",
+        "    ELSE '31+ days'\n",
+        "  END AS days_bucket,\n",
+        "  COUNT(*) AS user_count\n",
+        "FROM\n",
+        "  resume_project.gold.gold_user_behavior\n",
+        "GROUP BY\n",
+        "  CASE\n",
+        "    WHEN\n",
+        "      avg_days_between_orders >= 0\n",
+        "      AND avg_days_between_orders <= 7\n",
+        "    THEN\n",
+        "      '0-7 days'\n",
+        "    WHEN\n",
+        "      avg_days_between_orders > 7\n",
+        "      AND avg_days_between_orders <= 14\n",
+        "    THEN\n",
+        "      '8-14 days'\n",
+        "    WHEN\n",
+        "      avg_days_between_orders > 14\n",
+        "      AND avg_days_between_orders <= 21\n",
+        "    THEN\n",
+        "      '15-21 days'\n",
+        "    WHEN\n",
+        "      avg_days_between_orders > 21\n",
+        "      AND avg_days_between_orders <= 30\n",
+        "    THEN\n",
+        "      '22-30 days'\n",
+        "    ELSE '31+ days'\n",
+        "  END\n",
+        "ORDER BY\n",
+        "  CASE\n",
+        "    WHEN days_bucket = '0-7 days' THEN 1\n",
+        "    WHEN days_bucket = '8-14 days' THEN 2\n",
+        "    WHEN days_bucket = '15-21 days' THEN 3\n",
+        "    WHEN days_bucket = '22-30 days' THEN 4\n",
+        "    ELSE 5\n",
+        "  END"
+      ]
+    },
+    {
+      "name": "most_common_pair",
+      "displayName": "Most Common Product Pair",
+      "queryLines": [
+        "SELECT\n",
+        "  CONCAT(product_1, ' + ', product_2) AS product_pair,\n",
+        "  times_bought_together\n",
+        "FROM\n",
+        "  resume_project.gold.gold_product_pairs\n",
+        "ORDER BY\n",
+        "  times_bought_together DESC\n",
+        "LIMIT 1"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "b54d2c37",
+      "displayName": "Genral Overview Page",
+      "layout": [
+        {
+          "widget": {
+            "name": "total-orders",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "1b7fa189",
+                  "fields": [
+                    {
+                      "name": "sum(Total_Sales_per_day)",
+                      "expression": "SUM(`Total_Sales_per_day`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Orders"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(Total_Sales_per_day)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 3,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "un",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "1b7fa189",
+                  "fields": [
+                    {
+                      "name": "sum(Unique_Customers)",
+                      "expression": "SUM(`Unique_Customers`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Unique Customers"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(Unique_Customers)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 3,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "days",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "1b7fa189",
+                  "fields": [
+                    {
+                      "name": "avg(avg_days_since_prior_order)",
+                      "expression": "AVG(`avg_days_since_prior_order`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Avg days between orders"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg(avg_days_since_prior_order)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 3,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "overall-reorder-rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "e8121ac1",
+                  "fields": [
+                    {
+                      "name": "avg(reorder_rate_percent)",
+                      "expression": "AVG(`reorder_rate_percent`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Overall Reorder Rate"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg(reorder_rate_percent)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 3,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "ac9a7e4d",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "04a47531",
+                  "fields": [
+                    {
+                      "name": "product_pair",
+                      "expression": "`product_pair`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Top Product Pair"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "product_pair",
+                  "style": {
+                    "fontSize": 16
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 21,
+            "width": 4,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "d4956e29",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "1b7fa189",
+                  "fields": [
+                    {
+                      "name": "day_name",
+                      "expression": "`day_name`"
+                    },
+                    {
+                      "name": "Total_Sales_per_day",
+                      "expression": "`Total_Sales_per_day`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Daily Sales by Day of Week",
+                "showTitle": true
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 1
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  }
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "day_name",
+                  "axis": {
+                    "hideLabels": false,
+                    "hideGrid": false
+                  },
+                  "displayName": "Day of Week",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "custom-order",
+                      "orderedValues": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                        "Sunday"
+                      ]
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "Total_Sales_per_day",
+                  "displayName": "Total Orders",
+                  "scale": {
+                    "type": "quantitative",
+                    "domain": {
+                      "min": 350000
+                    }
+                  }
+                },
+                "color": {
+                  "fieldName": "day_name",
+                  "legend": {
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 7,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "hourly",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "89fbf02b",
+                  "fields": [
+                    {
+                      "name": "order_hour_of_day",
+                      "expression": "`order_hour_of_day`"
+                    },
+                    {
+                      "name": "Total_Sales_per_hour",
+                      "expression": "`Total_Sales_per_hour`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Hourly Order Activity"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ],
+                "size": 0.6
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "order_hour_of_day",
+                  "displayName": "Hour of day",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "Total_Sales_per_hour",
+                  "displayName": "AVG total Orders per Hour",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 14,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "daily-customer-activity",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "1b7fa189",
+                  "fields": [
+                    {
+                      "name": "order_dow",
+                      "expression": "`order_dow`"
+                    },
+                    {
+                      "name": "day_name",
+                      "expression": "`day_name`"
+                    },
+                    {
+                      "name": "Unique_Customers",
+                      "expression": "`Unique_Customers`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Daily customer activty"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "day_name",
+                  "axis": {
+                    "labelAngle": 90
+                  },
+                  "displayName": "Day",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "custom-order",
+                      "orderedValues": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                        "Sunday"
+                      ]
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "Unique_Customers",
+                  "axis": {
+                    "hideLabels": false
+                  },
+                  "displayName": "Customers per day",
+                  "scale": {
+                    "type": "quantitative",
+                    "domain": {
+                      "min": 125000
+                    }
+                  }
+                },
+                "color": {
+                  "fieldName": "order_dow",
+                  "legend": {
+                    "hideTitle": true,
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "quantitative",
+                    "colorRamp": {
+                      "mode": "single-hue",
+                      "baseColor": {
+                        "themeColorType": "visualizationColors",
+                        "position": 3
+                      }
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "days-with-most",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "1b7fa189",
+                  "fields": [
+                    {
+                      "name": "order_dow",
+                      "expression": "`order_dow`"
+                    },
+                    {
+                      "name": "day_name",
+                      "expression": "`day_name`"
+                    },
+                    {
+                      "name": "avg_days_since_prior_order",
+                      "expression": "`avg_days_since_prior_order`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Days with most reorders"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "day_name",
+                  "displayName": "Day name",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "custom-order",
+                      "orderedValues": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                        "Sunday"
+                      ]
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "avg_days_since_prior_order",
+                  "axis": {
+                    "title": "Avg days since last order"
+                  },
+                  "scale": {
+                    "type": "quantitative",
+                    "domain": {
+                      "min": 10
+                    }
+                  }
+                },
+                "color": {
+                  "fieldName": "order_dow",
+                  "legend": {
+                    "hideTitle": true,
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "quantitative",
+                    "colorRamp": {
+                      "mode": "single-hue",
+                      "baseColor": {
+                        "themeColorType": "visualizationColors",
+                        "position": 7
+                      }
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 14,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "header",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## <span style=\"font-size: 48px;line-height: 1.5;\">📊 Instacart Customer Analytics Dashboard</span>\n",
+                "\n",
+                "<span style=\"font-size: 24px;\">Comprehensive analysis of customer ordering patterns, behaviors, and product insights</span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "section1",
+            "multilineTextboxSpec": {
+              "lines": [
+                "### 📈 Daily & Weekly Patterns"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "section2",
+            "multilineTextboxSpec": {
+              "lines": [
+                "### ⏰ Order Timing & Frequency"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 13,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "section3",
+            "multilineTextboxSpec": {
+              "lines": [
+                "### 🛒 Product & Department Performance"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 20,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "dept-table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "66460b62",
+                  "fields": [
+                    {
+                      "name": "department_name",
+                      "expression": "`department_name`"
+                    },
+                    {
+                      "name": "reorder_rate_percent",
+                      "expression": "`reorder_rate_percent`"
+                    },
+                    {
+                      "name": "total_orders",
+                      "expression": "`total_orders`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Top Departments by Reorder Rate",
+                "showTitle": true
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "department_name"
+                  },
+                  {
+                    "fieldName": "reorder_rate_percent"
+                  },
+                  {
+                    "fieldName": "total_orders"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 21,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "product-table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "878b0f62",
+                  "fields": [
+                    {
+                      "name": "product_name",
+                      "expression": "`product_name`"
+                    },
+                    {
+                      "name": "reorder_rate_percent",
+                      "expression": "`reorder_rate_percent`"
+                    },
+                    {
+                      "name": "Times_Reordered",
+                      "expression": "`Times_Reordered`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Top Reordered Products",
+                "showTitle": true
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "product_name"
+                  },
+                  {
+                    "fieldName": "reorder_rate_percent"
+                  },
+                  {
+                    "fieldName": "Times_Reordered"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 21,
+            "width": 4,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "861c9d60",
+      "displayName": "Product & Department Performance",
+      "layout": [
+        {
+          "widget": {
+            "name": "most_reordered",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "top_reordered_product",
+                  "fields": [
+                    {
+                      "name": "product_name",
+                      "expression": "`product_name`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Most Reordered Product",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "product_name"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "highest_loyalty",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "highest_loyalty_product",
+                  "fields": [
+                    {
+                      "name": "product_name",
+                      "expression": "`product_name`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Highest Loyalty Product",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "product_name",
+                  "style": {
+                    "fontSize": 32
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 2,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "top_dept",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "top_department",
+                  "fields": [
+                    {
+                      "name": "department_name",
+                      "expression": "`department_name`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Top Department",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "department_name"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 2,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "highest_loyalty_dept",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "highest_loyalty_dept",
+                  "fields": [
+                    {
+                      "name": "department_name",
+                      "expression": "`department_name`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Highest Loyalty Department",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "department_name"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 2,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "top10_reordered",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "top10_products_reordered",
+                  "fields": [
+                    {
+                      "name": "Times_Reordered",
+                      "expression": "`Times_Reordered`"
+                    },
+                    {
+                      "name": "product_name",
+                      "expression": "`product_name`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Top Reordered Products",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "Times_Reordered",
+                  "displayName": "Times Reordered",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "product_name",
+                  "displayName": "Product",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "color": {
+                  "fieldName": "Times_Reordered",
+                  "legend": {
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 6,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "top10_rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "top10_rate",
+                  "fields": [
+                    {
+                      "name": "reorder_rate_percent",
+                      "expression": "`reorder_rate_percent`"
+                    },
+                    {
+                      "name": "product_name",
+                      "expression": "`product_name`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Highest Reorder Rate Products",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "reorder_rate_percent",
+                  "displayName": "Reorder Rate %",
+                  "scale": {
+                    "type": "quantitative",
+                    "domain": {
+                      "min": 85
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "product_name",
+                  "displayName": "Product",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "color": {
+                  "fieldName": "reorder_rate_percent",
+                  "legend": {
+                    "hide": true,
+                    "hideTitle": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 6,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "dept_orders",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "66460b62",
+                  "fields": [
+                    {
+                      "name": "total_orders",
+                      "expression": "`total_orders`"
+                    },
+                    {
+                      "name": "department_name",
+                      "expression": "`department_name`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Department Demand",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "total_orders",
+                  "displayName": "Total Orders",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "department_name",
+                  "displayName": "Department",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "color": {
+                  "fieldName": "total_orders",
+                  "legend": {
+                    "hideTitle": true,
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 13,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "dept_loyalty",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "66460b62",
+                  "fields": [
+                    {
+                      "name": "reorder_rate_percent",
+                      "expression": "`reorder_rate_percent`"
+                    },
+                    {
+                      "name": "department_name",
+                      "expression": "`department_name`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Department Loyalty",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "reorder_rate_percent",
+                  "displayName": "Reorder Rate %",
+                  "scale": {
+                    "type": "quantitative",
+                    "domain": {
+                      "min": 30
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "department_name",
+                  "displayName": "Department",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "color": {
+                  "fieldName": "reorder_rate_percent",
+                  "legend": {
+                    "hideTitle": true,
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 13,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "scatter_purchases_reorder",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "scatter_purchases_reorder",
+                  "fields": [
+                    {
+                      "name": "total_purchases",
+                      "expression": "`total_purchases`"
+                    },
+                    {
+                      "name": "reorder_rate_percent",
+                      "expression": "`reorder_rate_percent`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Purchases vs Reorder Rate",
+                "showTitle": true
+              },
+              "mark": {
+                "shape": "circle"
+              },
+              "widgetType": "scatter",
+              "encodings": {
+                "x": {
+                  "fieldName": "total_purchases",
+                  "displayName": "Total Purchases",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "reorder_rate_percent",
+                  "displayName": "Reorder Rate %",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "total_purchases",
+                  "legend": {
+                    "hideTitle": true,
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 20,
+            "width": 12,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "page_header",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Product & Department Performance\n",
+                "\n",
+                "Detailed analysis of top-performing products, departments, and customer loyalty patterns"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "product_section",
+            "multilineTextboxSpec": {
+              "lines": [
+                "### Product Performance Analysis"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "top10_purchases",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "top10_products_purchases",
+                  "fields": [
+                    {
+                      "name": "total_purchases",
+                      "expression": "`total_purchases`"
+                    },
+                    {
+                      "name": "product_name",
+                      "expression": "`product_name`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Top Products by Purchase Count",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "total_purchases",
+                  "displayName": "Total Purchases",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "product_name",
+                  "displayName": "Product",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "color": {
+                  "fieldName": "total_purchases",
+                  "legend": {
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "dept_section",
+            "multilineTextboxSpec": {
+              "lines": [
+                "### Department Performance Analysis"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "advanced_section",
+            "multilineTextboxSpec": {
+              "lines": [
+                "### Advanced Analytics"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 19,
+            "width": 12,
+            "height": 1
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "market_basket",
+      "displayName": "Market Basket & Customer Behavior",
+      "layout": [
+        {
+          "widget": {
+            "name": "page_header",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Market Basket & Customer Behavior\n",
+                "\n",
+                "Analysis of product combinations, purchase patterns, and customer loyalty segments"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "most_common_pair",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "most_common_pair",
+                  "fields": [
+                    {
+                      "name": "product_pair",
+                      "expression": "`product_pair`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Most Common Basket Pair",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "product_pair",
+                  "style": {
+                    "fontSize": 12,
+                    "fontWeight": 400,
+                    "fontStyle": "normal"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "largest_segment",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "user_loyalty_segments",
+                  "fields": [
+                    {
+                      "name": "reorder_rate_bucket",
+                      "expression": "`reorder_rate_bucket`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Largest Loyalty Segment",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "reorder_rate_bucket"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 2,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "avg_reorder_rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "avg_user_reorder_rate",
+                  "fields": [
+                    {
+                      "name": "avg_reorder_rate",
+                      "expression": "`avg_reorder_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Avg User Reorder Rate",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg_reorder_rate"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 2,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "avg_days",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "avg_days_between_orders",
+                  "fields": [
+                    {
+                      "name": "avg_days",
+                      "expression": "`avg_days`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Avg Days Between Orders",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg_days"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 2,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "pair_section",
+            "multilineTextboxSpec": {
+              "lines": [
+                "### Product Pair Analysis"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "top15_pairs",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "top15_product_pairs",
+                  "fields": [
+                    {
+                      "name": "times_bought_together",
+                      "expression": "`times_bought_together`"
+                    },
+                    {
+                      "name": "product_pair",
+                      "expression": "`product_pair`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Frequently Bought Together",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "times_bought_together",
+                  "displayName": "Times Bought Together",
+                  "scale": {
+                    "type": "quantitative",
+                    "domain": {
+                      "min": 30000
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "product_pair",
+                  "displayName": "Product Pair",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "color": {
+                  "fieldName": "times_bought_together",
+                  "legend": {
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "pair_table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "04a47531",
+                  "fields": [
+                    {
+                      "name": "product_1",
+                      "expression": "`product_1`"
+                    },
+                    {
+                      "name": "product_2",
+                      "expression": "`product_2`"
+                    },
+                    {
+                      "name": "times_bought_together",
+                      "expression": "`times_bought_together`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Product Pair Lookup",
+                "showTitle": true
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "product_1"
+                  },
+                  {
+                    "fieldName": "product_2"
+                  },
+                  {
+                    "fieldName": "times_bought_together"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 6,
+            "width": 4,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "behavior_section",
+            "multilineTextboxSpec": {
+              "lines": [
+                "### Customer Behavior Analysis"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 14,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "loyalty_dist",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "user_loyalty_segments",
+                  "fields": [
+                    {
+                      "name": "user_count",
+                      "expression": "`user_count`"
+                    },
+                    {
+                      "name": "reorder_rate_bucket",
+                      "expression": "`reorder_rate_bucket`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Customer Loyalty Distribution",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "user_count",
+                  "displayName": "Number of Customers",
+                  "scale": {
+                    "type": "quantitative",
+                    "domain": {
+                      "min": 20000
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "reorder_rate_bucket",
+                  "displayName": "Reorder Rate",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "custom-order",
+                      "orderedValues": [
+                        "0-25%",
+                        "25-50%",
+                        "50-75%",
+                        "75-100%"
+                      ]
+                    }
+                  }
+                },
+                "color": {
+                  "fieldName": "user_count",
+                  "legend": {
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 15,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "return_freq",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "days_distribution",
+                  "fields": [
+                    {
+                      "name": "user_count",
+                      "expression": "`user_count`"
+                    },
+                    {
+                      "name": "days_bucket",
+                      "expression": "`days_bucket`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Customer Return Frequency",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "user_count",
+                  "displayName": "Number of Customers",
+                  "scale": {
+                    "type": "quantitative",
+                    "domain": {
+                      "min": 20000
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "days_bucket",
+                  "displayName": "Days Between Orders",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "custom-order",
+                      "orderedValues": [
+                        "0-7 days",
+                        "8-14 days",
+                        "15-21 days",
+                        "22-30 days",
+                        "31+ days"
+                      ]
+                    }
+                  }
+                },
+                "color": {
+                  "fieldName": "user_count",
+                  "legend": {
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 15,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "scatter_section",
+            "multilineTextboxSpec": {
+              "lines": [
+                "### Customer Frequency vs Loyalty"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 21,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "scatter_freq_loyalty",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "e8121ac1",
+                  "fields": [
+                    {
+                      "name": "total_orders",
+                      "expression": "`total_orders`"
+                    },
+                    {
+                      "name": "reorder_rate_percent",
+                      "expression": "`reorder_rate_percent`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "title": "Customer Frequency vs Loyalty",
+                "showTitle": true
+              },
+              "version": 3,
+              "mark": {
+                "shape": "circle"
+              },
+              "widgetType": "scatter",
+              "encodings": {
+                "x": {
+                  "fieldName": "total_orders",
+                  "displayName": "Total Orders",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "reorder_rate_percent",
+                  "displayName": "Reorder Rate %",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "total_orders",
+                  "legend": {
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 22,
+            "width": 12,
+            "height": 8
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}

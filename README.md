@@ -234,7 +234,7 @@ instacart-lakehouse-pipeline/
 ![Dashboard overview](screenshots/04_dashboard_overview.png)
 
 ### Product & Department Performance
-![Product and department dashboard](05_dashboard_product_department.png)
+![Product and department dashboard](screenshots/05_dashboard_product_department.png)
 
 ### Market Basket & Customer Behavior
 ![Market basket dashboard](screenshots/06_dashboard_market_basket.png)
